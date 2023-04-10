@@ -1,0 +1,15 @@
+.cocktails {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.cocktailsNotFound {
+  grid-column: -1 / 1;
+}
+.cocktail {
+  cursor: pointer;
+  width: 300px;
+}
+.cocktail img {
+  width: 300px;
+}
