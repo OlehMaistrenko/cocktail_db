@@ -28,7 +28,12 @@ export const getStaticPaths: GetStaticPaths<{
   const paths = [
     {
       params: {
-        cocktailId: "1",
+        cocktailId: "17267",
+      },
+    },
+    {
+      params: {
+        cocktailId: "12760",
       },
     },
   ];
