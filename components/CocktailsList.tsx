@@ -1,12 +1,12 @@
 import { CocktailData } from "@/types/CocktailData";
 import classes from "../components/CocktailsList.module.css";
-import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 
 const CocktailsList: React.FC<{
   cocktailsData: CocktailData[];
 }> = ({ cocktailsData }) => {
-  const router = useRouter();
-  if (cocktailsData.length === 1 && cocktailsData[0].id === "") {
+  if (!cocktailsData.length) {
     return (
       <div className={classes.cocktails}>
         <div className={classes.cocktailsNotFound}>cocktailsNotFound</div>
@@ -17,16 +17,17 @@ const CocktailsList: React.FC<{
     <div className={classes.cocktails}>
       {cocktailsData.map((cocktail: CocktailData) => {
         return (
-          <div
-            className={classes.cocktail}
-            key={cocktail.id}
-            onClick={() => {
-              router.push("/" + cocktail.id);
-            }}
-          >
-            <img src={cocktail.image} alt='' />
-            <p>{cocktail.name}</p>
-          </div>
+          <Link key={cocktail.id} href={"/" + cocktail.id}>
+            <div className={classes.cocktail}>
+              <Image
+                src={cocktail.image}
+                alt={cocktail.name}
+                width={300}
+                height={300}
+              />
+              <p>{cocktail.name}</p>
+            </div>
+          </Link>
         );
       })}
     </div>

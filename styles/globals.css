@@ -108,7 +108,14 @@ a {
 }
 img {
   max-width: 100%;
+  width: auto;
+  height: auto;
 }
 ul {
   list-style-type: none;
+}
+input {
+  outline: none;
+  padding: 10px 20px;
+  margin-bottom: 10px;
 }
