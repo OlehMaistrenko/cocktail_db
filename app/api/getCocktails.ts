@@ -1,11 +1,11 @@
 import CocktailData from "@/types/CocktailData";
-import axios from "axios";
 const getCocktails = async (string: string = "") => {
-  const result = await axios.get(
+  const res = await fetch(
     "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + string
   );
+  const data = await res.json();
   try {
-    const cocktailsData: CocktailData[] = result.data.drinks.map(
+    const cocktailsData: CocktailData[] = data.drinks.map(
       (drink: { idDrink: string; strDrink: string; strDrinkThumb: string }) => {
         const cocktail: CocktailData = {
           id: drink.idDrink,
