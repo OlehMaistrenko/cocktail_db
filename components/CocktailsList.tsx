@@ -1,4 +1,4 @@
-import { CocktailData } from "@/types/CocktailData";
+import CocktailData from "@/types/CocktailData";
 import classes from "../components/CocktailsList.module.css";
 import Link from "next/link";
 import Image from "next/image";

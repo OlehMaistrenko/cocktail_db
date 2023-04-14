@@ -1,6 +1,5 @@
 import classes from "./CocktailDetail.module.css";
-import { CocktailData } from "@/types/CocktailData";
-import { useRouter } from "next/router";
+import CocktailData from "@/types/CocktailData";
 import Image from "next/image";
 import Link from "next/link";
 

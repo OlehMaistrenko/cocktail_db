@@ -1,4 +1,4 @@
-import { CocktailData } from "@/types/CocktailData";
+import CocktailData from "@/types/CocktailData";
 import axios from "axios";
 
 const getCocktail = async (id: string | string[] | undefined) => {
