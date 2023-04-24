@@ -1,4 +1,4 @@
-export type CocktailIngredient = { name: string; amount: string };
+import CocktailIngredient from "./CocktailIngredient";
 
 type CocktailData = {
   id: string;
