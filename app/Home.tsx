@@ -17,10 +17,8 @@ export default function Home({
 
   return (
     <>
-      <main>
         <input onInput={handleSearchInput} placeholder='Search cocktail' />
         <CocktailsList cocktailsData={cocktails}></CocktailsList>
-      </main>
     </>
   );
 }
