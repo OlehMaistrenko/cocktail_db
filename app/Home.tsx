@@ -17,8 +17,9 @@ export default function Home({
 
   return (
     <>
-        <input onInput={handleSearchInput} placeholder='Search cocktail' />
-        <CocktailsList cocktailsData={cocktails}></CocktailsList>
+      <input onInput={handleSearchInput} placeholder='Search cocktail' />
+{/* @ts-expect-error Async Server Component */}
+      <CocktailsList cocktailsData={cocktails}></CocktailsList>
     </>
   );
 }

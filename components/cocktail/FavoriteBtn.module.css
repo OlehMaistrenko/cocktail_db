@@ -1,0 +1,20 @@
+.btn{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 40px;height: 40px;
+  padding: 5px;
+  background: rgba(0,0 ,0, .4);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.withCount{
+  position: relative;right: unset;top: unset;
+}
+.btn svg{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
