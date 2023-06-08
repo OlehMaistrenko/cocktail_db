@@ -9,9 +9,7 @@ export default async function Page({
 }) {
   const cocktailData = await getCocktail(params.cocktailId);
   return (
-    <main>
-      <CocktailDetail cocktailData={cocktailData}></CocktailDetail>
-    </main>
+    <CocktailDetail cocktailData={cocktailData}></CocktailDetail>
   );
 }
 
@@ -19,3 +17,11 @@ export async function generateStaticParams() {
   const cocktailsData = await getCocktails();
   return cocktailsData.map((drink: CocktailData) => ({ cocktailId: drink.id }));
 }
+
+
+export async function generateMetadata({ params }: { params: { cocktailId: string }; }) {
+  const cocktailData = await getCocktail(params.cocktailId);
+  return {
+    title: cocktailData.name,
+  }
+};
