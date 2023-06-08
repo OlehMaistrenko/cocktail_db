@@ -1,7 +1,7 @@
 import getCocktail from "../api/getCoctail";
 import CocktailData from "@/types/CocktailData";
 import getCocktails from "../api/getCocktails";
-import CocktailDetail from "@/components/CocktailDetail";
+import CocktailDetail from "@/components/cocktail/CocktailDetail";
 export default async function Page({
   params,
 }: {

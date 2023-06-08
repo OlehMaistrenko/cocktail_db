@@ -1,5 +1,5 @@
 "use client";
-import CocktailsList from "../components/CocktailsList";
+import CocktailsList from "../components/cocktail/CocktailsList";
 import { useState } from "react";
 import CocktailData from "@/types/CocktailData";
 import getCocktails from "@/app/api/getCocktails";
