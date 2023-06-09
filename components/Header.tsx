@@ -18,7 +18,9 @@ export default async function Header() {
   return (
     <header>
       <div className={styles.container}>
-        <Link href='/'>Home</Link>
+        <Link href='/' prefetch={false}>
+          Home
+        </Link>
         <FavoritesLink>Favorites</FavoritesLink>
         {session ? (
           <UserInfo
