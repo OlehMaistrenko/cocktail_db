@@ -4,7 +4,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 import clientPromise from "@/lib/mongodb";
 import CocktailData from "@/types/CocktailData";
 import { request } from "http";
-
+export const dynamic = "force-dynamic";
 export async function GET(request?: Request) {
   try {
     const session = await getServerSession(authOptions);

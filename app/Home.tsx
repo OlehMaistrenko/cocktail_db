@@ -10,26 +10,27 @@ export default function Home({
   cocktailsData: CocktailData[];
 }) {
   const [cocktails, setCocktails] = useState<CocktailData[]>(cocktailsData);
-  // const [searchInputVal, setSearchInputVal] = useState<string>("");
-  // const debouncedSearchVal = useDebounce(searchInputVal, 700);
+  const [searchInputVal, setSearchInputVal] = useState<string>("");
+  const debouncedSearchVal = useDebounce(searchInputVal, 700);
   const handleSearchInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cocktailsData: CocktailData[] = await fetch(
-      `/api/cocktails?s=${e.target.value}`
-    ).then((res) => res.json());
-    setCocktails(cocktailsData);
+    setSearchInputVal(e.target.value);
   };
-  // useEffect(() => {
-  //   (async () => {
-  //     const cocktailsData: CocktailData[] = await fetch(
-  //       `/api/cocktails?s=${debouncedSearchVal}`
-  //     ).then((res) => res.json());
-  //     setCocktails(cocktailsData);
-  //   })();
-  // }, [debouncedSearchVal]);
+  useEffect(() => {
+    (async () => {
+      const cocktailsData: CocktailData[] = await fetch(
+        `/api/cocktails?s=${debouncedSearchVal}`
+      ).then((res) => res.json());
+      setCocktails(cocktailsData);
+    })();
+  }, [debouncedSearchVal]);
 
   return (
     <>
-      <input onInput={handleSearchInput} placeholder='Search cocktail' />
+      <input
+        onInput={handleSearchInput}
+        placeholder='Search cocktail'
+        value={searchInputVal}
+      />
       <CocktailsList cocktailsData={cocktails}></CocktailsList>
     </>
   );
