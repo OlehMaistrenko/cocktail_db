@@ -3,7 +3,7 @@ import CocktailData from "@/types/CocktailData";
 import { cookies } from "next/headers";
 export default async function Page() {
   const cocktailsData: CocktailData[] = await fetch(
-    `${process.env.API_ENDPOINT}/favorites`,
+    `${process.env.SERVER_ENDPOINT}/api/favorites`,
     {
       headers: { Cookie: cookies().toString() },
       cache: "no-store",
