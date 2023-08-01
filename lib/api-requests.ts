@@ -1,6 +1,8 @@
 import { FilteredUser, UserLoginResponse, UserResponse } from "../types/User";
 
 const SERVER_ENDPOINT = process.env.SERVER_ENDPOINT || "http://localhost:3000";
+console.log(process.env.SERVER_ENDPOINT, "server endpoint log");
+console.log(process.env.DB_URI, "db log");
 
 async function handleResponse<T>(response: Response): Promise<T> {
   const contentType = response.headers.get("Content-Type") || "";
