@@ -1,0 +1,23 @@
+.button{
+  position: relative;display: inline-grid;align-items: center;height: 40px;padding: 0 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.isLoading{color: transparent;}
+.isLoading::before{
+  content: "";
+  position: absolute;
+  left: 50%;top: 50%;transform: translate(-50%, -50%);
+  width: 20px;height: 20px;
+  animation: pulse .5s infinite alternate ease-in-out;
+  background: black;
+ 
+}
+@keyframes pulse {
+  0%{
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100%{
+    transform: translate(-50%, -50%) scale(.5);
+  }
+}

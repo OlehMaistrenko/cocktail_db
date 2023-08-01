@@ -1,7 +1,6 @@
 import CocktailData from "@/types/CocktailData";
 import classes from "./CocktailsList.module.css";
 import CocktailsListItem from "./CocktailsListItem";
-import { useEffect, useState } from "react";
 
 export default function CocktailsList({
   cocktailsData,

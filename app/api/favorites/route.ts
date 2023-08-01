@@ -1,20 +1,25 @@
-import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
+import { NextRequest } from "next/server";
+export async function GET(req: NextRequest) {
+  const userId = req.headers.get("X-USER-ID");
+  if (userId) {
+    try {
+      const client = await clientPromise;
+      const database = client.db("cocktailDB");
+      const favorites = database.collection("favorites");
+      const userFavorites = await favorites.findOne<{
+        _id: string;
+        favorites: any;
+      }>({ _id: new ObjectId(userId) });
+      console.log(userFavorites?.favorites);
 
-
-export async function GET() {
-  try {
-    const session =  await getServerSession(authOptions)
-    const client = await clientPromise;
-    const database = client.db('cocktailDB');
-    const users = database.collection('users');
-    const favorites = database.collection('favorites');
-    const user = await users.findOne({ email: session?.user?.email });
-    const userFavorites = await favorites.findOne<{_id:string, favorites: any}>({ _id: user?._id })
-    return NextResponse.json(userFavorites?.favorites)
-  } catch (err) {
-    return NextResponse.json(err)
+      return NextResponse.json(userFavorites?.favorites);
+    } catch (err) {
+      return NextResponse.json(err);
+    }
+  } else {
+    return NextResponse.json([]);
   }
 }

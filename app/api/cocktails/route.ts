@@ -1,13 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route";
 import clientPromise from "@/lib/mongodb";
 import CocktailData from "@/types/CocktailData";
 import { request } from "http";
+import { ObjectId } from "mongodb";
 export const dynamic = "force-dynamic";
-export async function GET(request?: Request) {
+export async function GET(request?: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const userId = request?.headers.get("X-USER-ID");
+
     const url = request ? new URL(request.url) : undefined;
     const string = url ? url.searchParams.get("s") : "";
     const data = await fetch(
@@ -24,17 +25,17 @@ export async function GET(request?: Request) {
         return cocktail;
       }
     );
-    if (session) {
+    if (userId) {
       const client = await clientPromise;
       const database = client.db("cocktailDB");
-      const users = database.collection("users");
       const favorites = database.collection("favorites");
-      const user = await users.findOne({ email: session?.user?.email });
       const userFavorites = await favorites.findOne<{
         _id: string;
         favorites: CocktailData[];
-      }>({ _id: user?._id });
+      }>({ _id: new ObjectId(userId) });
       const favIds = userFavorites?.favorites.map((item) => item.id);
+      console.log(favIds);
+
       cocktailsData = cocktailsData.map((cocktail) => {
         return {
           ...cocktail,

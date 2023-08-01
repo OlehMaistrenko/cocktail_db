@@ -1,7 +1,8 @@
 "use client";
-import { signIn } from "next-auth/react";
 import { ReactNode } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginBtn({ children }: { children: ReactNode }) {
-  return <button onClick={() => signIn()}>{children}</button>;
+  const router = useRouter();
+  return <button onClick={() => router.push("/login")}>{children}</button>;
 }

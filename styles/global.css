@@ -126,3 +126,6 @@ input {
   padding: 10px 20px;
   margin-bottom: 10px;
 }
+form>*:nth-child(n+2){
+  margin-top: 20px;
+}

@@ -1,31 +1,33 @@
-import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../auth/[...nextauth]/route'
+import { NextResponse, NextRequest } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { UpdateResult, InsertOneResult } from 'mongodb';
+import { UpdateResult, InsertOneResult, ObjectId } from "mongodb";
 
-
-
-export async function POST(request: Request) {
-  try {
-    const item = await request.json();
-    const session = await getServerSession(authOptions)
-    const client = await clientPromise;
-    const database = client.db('cocktailDB');
-    const users = database.collection('users');
-    const favorites = database.collection('favorites');
-    const user = await users.findOne({ email: session?.user?.email });
-    const userFavorites = await favorites.findOne({ _id: user?._id })
-    let res:UpdateResult|InsertOneResult;
-    if (userFavorites) {
-      res = await favorites.updateOne({ _id: user?._id }, { $addToSet: { "favorites": item } });
-    } else {
-      res = await favorites.insertOne({ _id: user?._id, favorites: [item] })
+export async function POST(req: NextRequest) {
+  const userId = req.headers.get("X-USER-ID");
+  if (userId) {
+    try {
+      const item = await req.json();
+      const client = await clientPromise;
+      const database = client.db("cocktailDB");
+      const favorites = database.collection("favorites");
+      const userFavorites = await favorites.findOne({
+        _id: new ObjectId(userId),
+      });
+      let res: UpdateResult | InsertOneResult;
+      if (userFavorites) {
+        res = await favorites.updateOne(
+          { _id: new ObjectId(userId) },
+          { $addToSet: { favorites: item } }
+        );
+      } else {
+        res = await favorites.insertOne({
+          _id: new ObjectId(userId),
+          favorites: [item],
+        });
+      }
+      if (res.acknowledged) return NextResponse.json(res.acknowledged);
+    } catch (err) {
+      return NextResponse.json(err);
     }
-    if (res.acknowledged)
-    return NextResponse.json(res.acknowledged)
-
-  } catch (err) {
-    return NextResponse.json(err)
   }
 }

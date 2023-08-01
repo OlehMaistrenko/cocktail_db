@@ -1,9 +1,8 @@
-
 import { Montserrat } from "@next/font/google";
 import "../styles/global.css";
 import Header from "@/components/Header";
 const montserrat = Montserrat({ subsets: ["latin"], display: "swap" });
-import Provider from "./Provider";
+import { Toaster } from "react-hot-toast";
 
 export default async function RootLayout({
   children,
@@ -13,11 +12,10 @@ export default async function RootLayout({
   return (
     <html lang='en' className={montserrat.className}>
       <body>
-        <Provider>
-          {/* @ts-expect-error Async Server Component */}
-          <Header />
-          <main>{children}</main>
-        </Provider>
+        <Toaster />
+
+        <Header />
+        <main>{children}</main>
       </body>
     </html>
   );

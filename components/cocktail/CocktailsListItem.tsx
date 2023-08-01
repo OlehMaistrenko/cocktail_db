@@ -4,23 +4,25 @@ import Link from "next/link";
 import classes from "./CocktailsList.module.css";
 import Image from "next/image";
 import FavoriteBtn from "./FavoriteBtn";
-import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import CocktailState from "@/types/CocktailState";
+import { useRouter } from "next/navigation";
+import useSession from "@/lib/useSession";
 
 export default function CocktailsListItem({
   cocktailData,
 }: {
   cocktailData: CocktailData;
 }) {
-  const session = useSession();
+  const router = useRouter();
+  const user = useSession();
   const [cocktailState, setCocktailState] = useState<CocktailState>({
     isLoading: false,
     isFavorite: cocktailData.isFavorite,
   });
   const favoriteClickHandlerUnsigned = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    signIn();
+    router.push("/login");
   };
   useEffect(() => {
     setCocktailState((prev) => {
@@ -32,36 +34,41 @@ export default function CocktailsListItem({
     e: React.MouseEvent<HTMLElement>
   ) => {
     e.preventDefault();
-    if (cocktailState.isLoading) {
-      return;
-    }
-    let action = "add";
-    if (cocktailState.isFavorite) {
-      action = "remove";
-    }
-    setCocktailState((prev) => {
-      return { ...prev, isLoading: true };
-    });
-    let res = await fetch("/api/favorites/" + action, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...cocktailData, isFavorite: true }),
-    });
-    const result = await res.json();
+    try {
+      if (cocktailState.isLoading) {
+        return;
+      }
+      let action = "add";
+      if (cocktailState.isFavorite) {
+        action = "remove";
+      }
+      setCocktailState((prev) => {
+        return { ...prev, isLoading: true };
+      });
+      let res = await fetch("/api/favorites/" + action, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...cocktailData, isFavorite: true }),
+      });
+      const result = await res.json();
+      console.log(result);
 
-    if (result) {
-      setCocktailState((prev) => {
-        return {
-          isFavorite: action === "add" ? true : false,
-          isLoading: false,
-        };
-      });
-    } else {
-      setCocktailState((prev) => {
-        return { ...prev, isLoading: false };
-      });
+      if (result) {
+        setCocktailState((prev) => {
+          return {
+            isFavorite: action === "add" ? true : false,
+            isLoading: false,
+          };
+        });
+      } else {
+        setCocktailState((prev) => {
+          return { ...prev, isLoading: false };
+        });
+      }
+    } catch {
+      router.push("/login");
     }
   };
   return (
@@ -76,9 +83,7 @@ export default function CocktailsListItem({
           />
           <FavoriteBtn
             onClick={
-              session.data
-                ? favoriteClickHandlerSigned
-                : favoriteClickHandlerUnsigned
+              user ? favoriteClickHandlerSigned : favoriteClickHandlerUnsigned
             }
             isFavorite={cocktailState.isFavorite}
             isLoading={cocktailState.isLoading}

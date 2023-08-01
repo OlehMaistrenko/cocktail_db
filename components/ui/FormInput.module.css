@@ -1,0 +1,20 @@
+
+.label{
+  font-size: 15px;
+}
+.input{
+  display: block;
+  font-size: 20px;
+  border-radius: 3px;
+  border: solid 1px rgb(51, 49, 49);
+  margin: 0;
+}
+.error{
+  font-size: 12px;
+  color: red;
+  line-height: 1;
+}
+
+.invalid .input{
+  border-color: red;
+}
