@@ -3,8 +3,6 @@ import { MongoClient } from "mongodb";
 if (!process.env.DB_URI) {
   throw new Error('Invalid/Missing environment variable: "DB_URI"');
 }
-console.log(process.env.SERVER_ENDPOINT, "server endpoint log 22222");
-console.log(process.env.DB_URI, "db log 22222");
 
 const uri = process.env.DB_URI;
 const options = {};

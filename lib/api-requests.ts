@@ -1,8 +1,6 @@
 import { FilteredUser, UserLoginResponse, UserResponse } from "../types/User";
 
-const SERVER_ENDPOINT = process.env.SERVER_ENDPOINT || "http://localhost:3000";
-console.log(process.env.SERVER_ENDPOINT, "server endpoint log");
-console.log(process.env.DB_URI, "db log");
+const NEXT_PUBLIC_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
 async function handleResponse<T>(response: Response): Promise<T> {
   const contentType = response.headers.get("Content-Type") || "";
@@ -23,7 +21,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
 export async function apiRegisterUser(
   credentials: string
 ): Promise<FilteredUser> {
-  const response = await fetch(`${SERVER_ENDPOINT}/api/auth/register`, {
+  const response = await fetch(`${NEXT_PUBLIC_URL}/api/auth/register`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -36,7 +34,7 @@ export async function apiRegisterUser(
 }
 
 export async function apiLoginUser(credentials: string): Promise<FilteredUser> {
-  const response = await fetch(`${SERVER_ENDPOINT}/api/auth/login`, {
+  const response = await fetch(`${NEXT_PUBLIC_URL}/api/auth/login`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -49,7 +47,7 @@ export async function apiLoginUser(credentials: string): Promise<FilteredUser> {
 }
 
 export async function apiLogoutUser(): Promise<void> {
-  const response = await fetch(`${SERVER_ENDPOINT}/api/auth/logout`, {
+  const response = await fetch(`${NEXT_PUBLIC_URL}/api/auth/logout`, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -69,7 +67,7 @@ export async function apiGetAuthUser(token?: string): Promise<FilteredUser> {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${SERVER_ENDPOINT}/api/auth/getUser`, {
+  const response = await fetch(`${NEXT_PUBLIC_URL}/api/auth/getUser`, {
     method: "GET",
     credentials: "include",
     headers,
